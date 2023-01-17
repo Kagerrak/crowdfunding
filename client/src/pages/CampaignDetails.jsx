@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { ethers } from "ethers";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useStateContext } from "../context";
-import { CustomButton, CountBox } from "../components";
+import { CustomButton, CountBox, Loader } from "../components";
 import { calculateBarPercentage, daysLeft } from "../utils";
 import { thirdweb } from "../assets";
 
 const CampaignDetails = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { getDonations, contract, address, donate } = useStateContext();
 
@@ -33,13 +33,13 @@ const CampaignDetails = () => {
     console.log(state.pId);
 
     await donate(state.pId, amount);
-
+    navigate("/");
     setIsLoading(false);
   };
 
   return (
     <div>
-      {isLoading && "loading..."}
+      {isLoading && <Loader />}
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
           <img
