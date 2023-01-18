@@ -39,7 +39,7 @@ const FundCard = ({
           <h3 className="font-epilogue font-semibold text-[16px] text-white text-left leading-[26px] truncate">
             {title}
           </h3>
-          <p className="mt-[5px] font-epilogue font-normal font-[12px text-[#808191] text-left leading-[18px] truncate">
+          <p className="mt-[5px] font-epilogue font-normal text-[12px] text-[#808191] text-left leading-[18px] truncate">
             {description}
           </p>
         </div>
