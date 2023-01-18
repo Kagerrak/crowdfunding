@@ -8,11 +8,13 @@ import { thirdweb } from "../assets";
 const CampaignDetails = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { getDonations, contract, address, donate } = useStateContext();
+  const { getDonations, contract, address, donate, getCreatorCampaigns } =
+    useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [donators, setDonators] = useState([]);
+  const [creatorCampaigns, setCreatorCampaigns] = useState("");
 
   const remainingDays = daysLeft(state.deadline);
 
@@ -25,6 +27,7 @@ const CampaignDetails = () => {
   useEffect(() => {
     if (contract) {
       fetchDonators();
+      fetchCreatorCampaigns();
     }
   }, [contract, address]);
 
@@ -35,6 +38,11 @@ const CampaignDetails = () => {
     await donate(state.pId, amount);
     navigate("/");
     setIsLoading(false);
+  };
+
+  const fetchCreatorCampaigns = async () => {
+    const data = await getCreatorCampaigns(state.owner);
+    setCreatorCampaigns(data);
   };
 
   return (
@@ -88,7 +96,7 @@ const CampaignDetails = () => {
                   {state.owner}
                 </h4>
                 <p className="mt-[4px] font-epilogue  font-normal text-[12px] text-[#808191]">
-                  10 Campaigns
+                  {creatorCampaigns}
                 </p>
               </div>
             </div>
